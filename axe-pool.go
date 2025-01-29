@@ -75,8 +75,8 @@ func main() {
 					if err != nil {
 						return err
 					}
-					fmt.Println("Doing a re-scan in 10 seconds...")
-					time.Sleep(10 * time.Second)
+					fmt.Println("Doing a re-scan in 20 seconds...")
+					time.Sleep(20 * time.Second)
 					lib.Scan()
 					lib.List()
 					return nil
