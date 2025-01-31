@@ -29,7 +29,7 @@ func GetSystemInfo(ip string) Bitaxe {
 
 // ScanNetwork scans the network for the Bitaxe
 func ScanNetwork() []Bitaxe {
-	var bitaxes []Bitaxe
+	var bitaxes = make(map[string]Bitaxe)
 	var mutex sync.Mutex
 	var waitgroup sync.WaitGroup
 
@@ -56,12 +56,16 @@ func ScanNetwork() []Bitaxe {
 				if bitaxe.Hostname != "" {
 					bitaxe.IP = ip
 					mutex.Lock()
-					bitaxes = append(bitaxes, bitaxe)
+					bitaxes[ip] = bitaxe
 					mutex.Unlock()
 				}
 			}()
 		}
 	}
 	waitgroup.Wait()
-	return bitaxes
+	final := []Bitaxe{}
+	for _, bitaxe := range bitaxes {
+		final = append(final, bitaxe)
+	}
+	return final
 }
